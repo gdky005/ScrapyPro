@@ -2,6 +2,8 @@ from scrapy import Selector
 from scrapy.spiders import Spider
 from selenium import webdriver
 
+from Consumers12315 import Utils
+
 
 class Consumers12315(Spider):
     name = "Consumers12315"
@@ -38,11 +40,11 @@ class Consumers12315(Spider):
         for index, id in enumerate(ids):
             name = names[index]
 
-            start = id.find(startStr) + 2
-            end = id.find(endStr)
-            currentId = id[start:end]
+            currentId = Utils.sliptStr(id, startStr, endStr)
             print("处理后的ID：" + currentId + ", 名称是：\t\t\t" + name + ", 对应的访问地址是："
                   + "http://www.12315.cn/knowledge/knowledgeView?zlcode=" + currentId)
+
+
 
 
 
