@@ -40,6 +40,47 @@ class Consumers12315_Detail(Spider):
 
 
 
+        myContent = selector.xpath('//div[@class="WordSection1"]/p[@class="MsoNormal"]/span//text()').extract()
+
+        i = 0
+
+        isTitle = False
+        for t in myContent:
+
+            if isTitle:
+                print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+                print("当前的问题是：" + t)
+                print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+
+                isTitle = False
+                continue
+
+
+
+            if Utils.matchTitle(t):
+                i += 1
+                if i > 1:
+                    break
+
+                print("______________________")
+                print("______检测到行号了______")
+                print("______________________")
+
+                isTitle = True
+                continue
+
+            if ~isTitle:
+                print(t)
+
+
+
+
+
+
+
+
+
+
 
     # 获取当前的大标题
     def getBigTitle(self, selector):

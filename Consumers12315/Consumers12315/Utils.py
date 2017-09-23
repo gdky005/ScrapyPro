@@ -13,3 +13,12 @@ def matchTitle(text):
     if None != match:
         return True
     return False
+
+
+def isEndChar(text):
+    char = ["。", "？", "”", "！"]
+    endChar = text[len(text) - 1]
+    for c in char:
+        if c == endChar:
+            return True
+    return False
