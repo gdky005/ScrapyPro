@@ -43,44 +43,95 @@ class Consumers12315_Detail(Spider):
         myContent = selector.xpath('//div[@class="WordSection1"]/p[@class="MsoNormal"]/span//text()').extract()
 
         i = 0
-
         isTitle = False
-        for t in myContent:
+
+        space = "\r\n\n\t"
+        space1 = "\r\n"
+        content1 = ""
+
+        # self.singleText(content1, i, isTitle, myContent, space)
+
+        for line in myContent:
+
+            if isTitle:
+                content1 += "^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + space1
+                content1 += "当前的问题是：" + line + space1
+                content1 += "^^^^^^^^^^^^^^^^^^^^^^^^^^^^" + space
+
+                isTitle = False
+                continue
+
+            if Utils.matchTitle(line):
+                i += 1
+                if i > 10:
+                    break
+
+                content1 += "______________________" + space1
+                content1 += line + "---------------" + space1
+                content1 += "______________________" + space1
+
+                isTitle = True
+                continue
+
+            if ~isTitle:
+                l = line
+                # for l in line:
+
+                if Utils.matchTitle(l):
+                    # content1 += line
+                    content1 += space
+                    continue
+
+                content1 += l
+                endChar = l[len(l) - 1]
+
+                if Utils.isEndChar(endChar):
+                    content1 += space
+        print(content1)
+
+
+
+
+
+
+    def singleText(self, content1, i, isTitle, myContent, space):
+        for line in myContent:
 
             if isTitle:
                 print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-                print("当前的问题是：" + t)
+                print("当前的问题是：" + line)
                 print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
 
                 isTitle = False
                 continue
 
-
-
-            if Utils.matchTitle(t):
+            if Utils.matchTitle(line):
                 i += 1
                 if i > 1:
                     break
 
                 print("______________________")
-                print("______检测到行号了______")
+                print(line + "---------------")
                 print("______________________")
 
                 isTitle = True
                 continue
 
             if ~isTitle:
-                print(t)
+                l = line
+                # for l in line:
 
+                if Utils.matchTitle(l):
+                    # content1 += line
+                    content1 += space
+                    continue
 
+                content1 += l
+                endChar = l[len(l) - 1]
 
-
-
-
-
-
-
-
+                if Utils.isEndChar(endChar):
+                    content1 += space
+        print(content1)
 
     # 获取当前的大标题
     def getBigTitle(self, selector):

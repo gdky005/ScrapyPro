@@ -16,7 +16,7 @@ def matchTitle(text):
 
 
 def isEndChar(text):
-    char = ["。", "？", "”", "！"]
+    char = ["。", "？", "”", "！", "："]
     endChar = text[len(text) - 1]
     for c in char:
         if c == endChar:
